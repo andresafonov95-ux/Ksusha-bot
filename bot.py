@@ -44,8 +44,7 @@ async def send_video(callback: types.CallbackQuery):
     await asyncio.sleep(2)
 
     # ПОКА ЗАГЛУШКА
-    await callback.message.answer_video("ТУТ_ТВОЙ_FILE_ID", caption="С 8 марта ❤️")
-    VIDEO FILE_ID: BAACAgIAAxkBAAMXaadcWDGZ7LA9hKPW3zL0MdgEUd4AAjiUAALVgUBJtuvqVMSxGA86BA
+    await callback.message.answer_video("BAACAgIAAxkBAAMXaadcWDGZ7LA9hKPW3zL0MdgEUd4AAjiUAALVgUBJtuvqVMSxGA86BA", caption="С 8 марта ❤️")
 
 # --- ПОЛУЧЕНИЕ FILE_ID ---
 @dp.message(lambda message: message.video is not None)
