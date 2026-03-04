@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 
 # --- ТОКЕН ---
 TOKEN = os.getenv("TOKEN")
+VIDEO_ID = os.getenv("VIDEO_ID")
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
@@ -42,9 +43,7 @@ async def send_video(callback: types.CallbackQuery):
 
     await callback.message.answer("Секунду…")
     await asyncio.sleep(2)
-
-    # ПОКА ЗАГЛУШКА
-    await callback.message.answer_video("BAACAgIAAxkBAAMXaadcWDGZ7LA9hKPW3zL0MdgEUd4AAjiUAALVgUBJtuvqVMSxGA86BA", caption="С 8 марта ❤️")
+    await callback.message.answer_video(VIDEO_ID, caption="С 8 марта ❤️")
 
 # --- ПОЛУЧЕНИЕ FILE_ID ---
 @dp.message(lambda message: message.video is not None)
