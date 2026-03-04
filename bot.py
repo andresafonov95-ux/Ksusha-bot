@@ -24,14 +24,14 @@ dp = Dispatcher()
 async def start(message: types.Message):
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
-            [InlineKeyboardButton(text="Открыть ❤️", callback_data="open_video")]
+            [InlineKeyboardButton(text="Открыть", callback_data="open_video")]
         ]
     )
 
     logger.info(f"User {message.from_user.id} started the bot")
 
     await message.answer(
-        "Ксюша, у меня для тебя кое-что есть.\n\nНо просто так я не отдам 🙂",
+        "Ксюша,🐱 у меня для тебя кое-что есть. Просто послушай",
         reply_markup=keyboard
     )
 
@@ -43,7 +43,7 @@ async def send_video(callback: types.CallbackQuery):
 
     await callback.message.answer("Секунду…")
     await asyncio.sleep(2)
-    await callback.message.answer_video(VIDEO_ID, caption="С 8 марта ❤️")
+    await callback.message.answer_video(VIDEO_ID, caption="🐱 и 🐰")
 
 # --- ПОЛУЧЕНИЕ FILE_ID ---
 @dp.message(lambda message: message.video is not None)
