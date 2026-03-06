@@ -56,7 +56,7 @@ async def send_video(callback: types.CallbackQuery):
 
     await callback.message.answer_video(
         VIDEO_ID,
-        caption="caption="Иногда чужие слова говорят то, что я чувствую ❤️"
+        caption="Иногда чужие слова говорят то, что я чувствую ❤️"
     )
 
 
