@@ -1,60 +1,61 @@
 import asyncio
 import os
-import logging
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import CommandStart
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, BotCommand
 
-# --- ЛОГИ ---
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
-)
-logger = logging.getLogger(__name__)
-
-# --- ТОКЕН ---
 TOKEN = os.getenv("TOKEN")
 VIDEO_ID = os.getenv("VIDEO_ID")
+ADMIN_ID = int(os.getenv("ADMIN_ID"))
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
-# --- СТАРТ ---
+
 @dp.message(CommandStart())
 async def start(message: types.Message):
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
-            [InlineKeyboardButton(text="Открыть", callback_data="open_video")]
+            [InlineKeyboardButton(text="🌸 Открыть подарок", callback_data="open_video")]
         ]
     )
 
-    logger.info(f"User {message.from_user.id} started the bot")
-
     await message.answer(
-        "Ксюша,🐱 у меня для тебя кое-что есть. Просто послушай",
+        "Ксюша, у меня для тебя кое-что есть.\n\nНажми кнопку ниже ❤️",
         reply_markup=keyboard
     )
 
-# --- КНОПКА ---
+
 @dp.callback_query(lambda c: c.data == "open_video")
 async def send_video(callback: types.CallbackQuery):
     await callback.answer()
-    logger.info(f"User {callback.from_user.id} clicked open_video")
 
-    await callback.message.answer("Секунду…")
+    user = callback.from_user
+
+    await bot.send_message(
+        ADMIN_ID,
+        f"🎁 Подарок открыт\n\n"
+        f"Имя: {user.first_name}\n"
+        f"Username: @{user.username}\n"
+        f"ID: {user.id}"
+    )
+
+    await callback.message.answer("Подожди секунду… 🌷")
     await asyncio.sleep(2)
-    await callback.message.answer_video(VIDEO_ID, caption="🐱 и 🐰")
 
-# --- ПОЛУЧЕНИЕ FILE_ID ---
-@dp.message(lambda message: message.video is not None)
-async def get_video_id(message: types.Message):
-    logger.info(f"VIDEO FILE_ID: {message.video.file_id}")
-    await message.answer("Видео получил 👌")
+    await callback.message.answer_video(
+        VIDEO_ID,
+        caption="С 8 марта ❤️"
+    )
 
-# --- ЗАПУСК ---
+
 async def main():
-    logger.info("BOT STARTED")
+    await bot.set_my_commands([
+        BotCommand(command="start", description="Открыть подарок")
+    ])
+
     await dp.start_polling(bot)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
