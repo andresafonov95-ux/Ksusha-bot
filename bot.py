@@ -16,14 +16,25 @@ dp = Dispatcher()
 async def start(message: types.Message):
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
-            [InlineKeyboardButton(text="🌸 Открыть подарок", callback_data="open_video")]
+            [InlineKeyboardButton(text="🐱", callback_data="open_video")]
         ]
     )
 
-    await message.answer(
-        "Ксюша, у меня для тебя кое-что есть.\n\nНажми кнопку ниже ❤️",
-        reply_markup=keyboard
-    )
+    text = """
+Ксюша.
+
+Ты иногда говоришь, что не веришь, что я тебя люблю.
+Наверное потому, что я не всегда умею говорить об этом правильно.
+
+Но это правда.
+
+Поэтому я сделал для тебя этот маленький сюрприз.
+Просто чтобы ты увидела, что ты для меня очень важна.
+
+Нажми кнопку 🐱
+"""
+
+    await message.answer(text, reply_markup=keyboard)
 
 
 @dp.callback_query(lambda c: c.data == "open_video")
@@ -34,7 +45,7 @@ async def send_video(callback: types.CallbackQuery):
 
     await bot.send_message(
         ADMIN_ID,
-        f"🎁 Подарок открыт\n\n"
+        f"Кнопка нажата\n\n"
         f"Имя: {user.first_name}\n"
         f"Username: @{user.username}\n"
         f"ID: {user.id}"
@@ -45,13 +56,13 @@ async def send_video(callback: types.CallbackQuery):
 
     await callback.message.answer_video(
         VIDEO_ID,
-        caption="С 8 марта ❤️"
+        caption="caption="Иногда чужие слова говорят то, что я чувствую ❤️"
     )
 
 
 async def main():
     await bot.set_my_commands([
-        BotCommand(command="start", description="Открыть подарок")
+        BotCommand(command="start", description="Это для тебя, Кис")
     ])
 
     await dp.start_polling(bot)
