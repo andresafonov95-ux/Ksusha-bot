@@ -20,6 +20,18 @@ async def get_photo_id(message: types.Message):
 
 @dp.message(CommandStart())
 async def start(message: types.Message):
+    
+    user = message.from_user
+    username = user.username if user.username else "нет username"
+
+    await bot.send_message(
+        ADMIN_ID,
+        f"Бот запущен\n\n"
+        f"Имя: {user.first_name}\n"
+        f"Username: {username}\n"
+        f"ID: {user.id}"
+    )
+    
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
             [InlineKeyboardButton(text="🐱", callback_data="open_video")]
