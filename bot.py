@@ -62,12 +62,13 @@ async def send_video(callback: types.CallbackQuery):
     await callback.answer()
 
     user = callback.from_user
+    username = user.username if user.username else "нет username"
 
     await bot.send_message(
         ADMIN_ID,
         f"Кнопка нажата\n\n"
         f"Имя: {user.first_name}\n"
-        f"Username: @{user.username}\n"
+        f"Username: {username}\n"
         f"ID: {user.id}"
     )
 
@@ -78,11 +79,11 @@ async def send_video(callback: types.CallbackQuery):
         VIDEO_ID,
         caption="Иногда чужие слова говорят то, что я чувствую ❤️"
     )
-    await asyncio.sleep(120)
+    await asyncio.sleep(90)
     
     await callback.message.answer_photo(
-    PHOTO_ID,
-    caption="А это момент из сегодняшнего дня.\n\nПусть у нас всегда будет такая искра, как на этом фото ❤️"
+        PHOTO_ID,
+        caption="А это момент из сегодняшнего дня.\n\nПусть у нас всегда будет такая искра, как на этом фото ❤️"
     ) 
 
 async def main():
