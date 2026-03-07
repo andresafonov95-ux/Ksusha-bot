@@ -11,11 +11,11 @@ ADMIN_ID = int(os.getenv("ADMIN_ID"))
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
-@dp.message(lambda message: message.photo)
+'''@dp.message(lambda message: message.photo)
 async def get_photo_id(message: types.Message):
     photo = message.photo[-1]
     print("PHOTO_ID:", photo.file_id)
-    await message.answer("Фото получил 👌")
+    await message.answer("Фото получил 👌")'''
 
 @dp.message(CommandStart())
 async def start(message: types.Message):
@@ -65,7 +65,12 @@ async def send_video(callback: types.CallbackQuery):
         VIDEO_ID,
         caption="Иногда чужие слова говорят то, что я чувствую ❤️"
     )
-
+    await asyncio.sleep(120)
+    
+    await callback.message.answer_photo(
+    PHOTO_ID,
+    caption="А это момент из сегодняшнего дня.\n\nПусть у нас всегда будет такая искра, как на этом фото ❤️"
+    ) 
 
 async def main():
     await bot.set_my_commands([
