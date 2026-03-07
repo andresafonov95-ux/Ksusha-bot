@@ -11,6 +11,11 @@ ADMIN_ID = int(os.getenv("ADMIN_ID"))
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
+@dp.message(lambda message: message.photo)
+async def get_photo_id(message: types.Message):
+    photo = message.photo[-1]
+    print("PHOTO_ID:", photo.file_id)
+    await message.answer("Фото получил 👌")
 
 @dp.message(CommandStart())
 async def start(message: types.Message):
