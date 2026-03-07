@@ -6,6 +6,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, BotCommand
 
 TOKEN = os.getenv("TOKEN")
 VIDEO_ID = os.getenv("VIDEO_ID")
+PHOTO_ID = os.getenv("PHOTO_ID")
 ADMIN_ID = int(os.getenv("ADMIN_ID"))
 
 bot = Bot(token=TOKEN)
